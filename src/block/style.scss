@@ -1,0 +1,75 @@
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+
+.reader-alerts {
+  background: $gray;
+  display: flex;
+  flex-flow: column nowrap;
+  list-style: none;
+  padding: 0;
+  position: fixed;
+  margin: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  transition: all 0.15s;
+  z-index: 9999;
+
+  .reader-alert-item {
+    font-size: 0.9em;
+    opacity: 0.8;
+    padding: 0 24px;
+    position: relative;
+    text-align: center;
+    height: auto;
+    width: 100%;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &:nth-child(n+2) {
+      border-top: 1px solid $black;
+    }
+
+    p {
+      margin: 0;
+      padding-top: 1em;
+      padding-bottom: 1em;
+    }
+    
+    .reader-alert-link,
+    .close-reader-alert {
+      text-decoration: none;
+    }
+
+    .reader-alert-link {
+      color: inherit;
+    }
+
+    .close-reader-alert {
+      background-color: $gray;
+      border: 1px solid $black;
+      border-radius: 50%;
+      color: inherit;
+      font-size: 1.1em;
+      font-weight: bold;
+      line-height: 1;
+      padding: 2px 3px;
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: background 0.1s, color 0.1s;
+
+
+      &:hover {
+        background: $black;
+        color: $gray;
+      }
+    }
+  }
+}
