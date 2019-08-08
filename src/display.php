@@ -34,7 +34,7 @@ function rhdwp_reader_alerts() {
 			$link_close = $alert_link ? '</a>' : '';
 
 			$item = '
-				<li class="reader-alert-item">
+				<li class="reader-alert-item" data-post-id="' . $alert->ID . '">
 					<div class="alert-content">
 					' . $link_open . $alert_text . $link_close . '
 					</div>

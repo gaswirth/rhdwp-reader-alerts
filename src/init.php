@@ -76,10 +76,18 @@ function rhdwp_reader_alerts_block_assets() { // phpcs:ignore
 	);
 
 	// Frontend JS
+	wp_register_script(
+		'js-cookie',
+		plugins_url( '/node_modules/js-cookie/src/js.cookie.js', dirname( __FILE__ ) ),
+		array(),
+		null,
+		true
+	);
+
 	wp_enqueue_script(
 		'rhdwp_reader_alerts-frontend-js',
 		plugins_url( '/dist/frontend.js', dirname( __FILE__ ) ), 
-		array( 'jquery' ),
+		array( 'jquery', 'js-cookie' ),
 		null,
 		true
 	);
