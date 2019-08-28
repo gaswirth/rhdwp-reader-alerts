@@ -5,7 +5,7 @@
  * Author: Roundhouse Designs
  * Author URI: https://roundhouse-designs.com
  * Plugin URI: https://github.com/gaswirth/rhdwp-reader-alerts
- * Version: 1.0
+ * Version: 1.0.1
  * License: GPL2+
  *
  * @package RHDWP_Reader_Alerts
