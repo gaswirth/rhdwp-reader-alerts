@@ -237,7 +237,7 @@ add_action( 'wp', 'rhdwp_expire_reader_alert_daily' );
 add_action( 'rhdwp_expire_reader_alert', 'rhdwp_expire_reader_alert_callback' );
 function rhdwp_expire_reader_alert_daily() {
 	if ( ! wp_next_scheduled( 'rhdwp_expire_reader_alert' ) ) {
-		wp_schedule_event( current_time( 'timestamp' ) , 'ten', 'rhdwp_expire_reader_alert' );
+		wp_schedule_event( current_time( 'timestamp' ) , 'twicedaily', 'rhdwp_expire_reader_alert' );
 	}
 }
 
@@ -271,14 +271,3 @@ function rhdwp_expire_reader_alert_callback() {
 		wp_reset_postdata();
 	}
 }
-
-//DEV
-function isa_add_cron_recurrence_interval( $schedules ) {
-	$schedules['ten'] = array(
-					'interval'  => 10,
-					'display'   => __( 'Every 10 seconds', 'rhdwp' )
-	);
-	 
-	return $schedules;
-}
-add_filter( 'cron_schedules', 'isa_add_cron_recurrence_interval' );
