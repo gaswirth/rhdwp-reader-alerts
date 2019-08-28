@@ -6,12 +6,23 @@
  */
 
 //  Import CSS.
-import './style.scss'
-import './editor.scss'
+import './style.scss';
+import './editor.scss';
 
-const { __ } = wp.i18n // Import __() from wp.i18n
-const { registerBlockType } = wp.blocks // Import registerBlockType() from wp.blocks
-const { TextControl, CheckboxControl } = wp.components
+const { __ } = wp.i18n; // Import __() from wp.i18n
+const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
+const { TextControl, CheckboxControl, DateTimePicker } = wp.components;
+const { __experimentalGetSettings } = wp.date;
+
+// To know if the current timezone is a 12 hour time with look for an "a" in the time format.
+// We also make sure this a is not escaped by a "/".
+const dateTimeSettings = __experimentalGetSettings();
+const is12HourTime = /a(?!\\)/i.test(
+  dateTimeSettings.formats.time
+    .toLowerCase() // Test only the lower case a
+    .replace(/\\\\/g, '') // Replace "//" with empty strings
+    .split('').reverse().join('') // Reverse the string and test for "a" not followed by a slash
+);
 
 /**
  * Register: aa Gutenberg Block.
@@ -41,7 +52,17 @@ registerBlockType('rhdwp/reader-alerts-link-meta-block', {
       type: 'boolean',
       source: 'meta',
       meta: 'rhdwp_alert_link_url_new_tab'
-    }
+    },
+    hasExpiration: {
+      type: 'boolean',
+      source: 'meta',
+      meta: 'rhdwp_alert_has_expiration',
+    },
+    expireDateTime: {
+      type: 'string',
+      source: 'meta',
+      meta: 'rhdwp_alert_expiration_date',
+    },
   },
 
   /**
@@ -54,26 +75,50 @@ registerBlockType('rhdwp/reader-alerts-link-meta-block', {
    */
   edit: props => {
     const {
-      attributes: { url, openNewTab },
+      attributes: { url, openNewTab, hasExpiration, expireDateTime },
       className,
       setAttributes
     } = props
 
     return (
       <div className={className}>
-        <TextControl
-          label={__('Notification Link', 'rhdwp')}
-          value={url}
-          onChange={url => setAttributes({ url })}
-        />
-        <CheckboxControl
-          label={__(
-            'Open this link in a new tab (not recommended for internal links).',
-            'rhdwp'
-          )}
-          checked={openNewTab}
-          onChange={openNewTab => setAttributes({ openNewTab })}
-        />
+        <div className='reader-options'>
+          <h4>Alert Options</h4>
+          <TextControl
+            label={__('Notification Link', 'rhdwp')}
+            value={url}
+            onChange={url => setAttributes({ url })}
+          />
+          <CheckboxControl
+            label={__(
+              'Open this link in a new tab (not recommended for internal site links).',
+              'rhdwp'
+            )}
+            checked={openNewTab}
+            onChange={openNewTab => setAttributes({ openNewTab })}
+          />
+          <CheckboxControl
+            label={__(
+              'Expire this post at a specific date/time',
+              'rhdwp'
+            )}
+            checked={hasExpiration}
+            onChange={hasExpiration => setAttributes({ hasExpiration })}
+            is12Hour={is12HourTime}
+          />
+          {hasExpiration ?
+            <div className='expire-alert-control'>
+              <p>Expiration:</p>
+              <DateTimePicker
+                currentDate={expireDateTime}
+                onChange={(expireDateTime) => setAttributes({ expireDateTime })}
+                is12Hour={is12HourTime}
+              />
+            </div>
+            :
+            ''
+          }
+        </div>
       </div>
     )
   },
@@ -82,7 +127,7 @@ registerBlockType('rhdwp/reader-alerts-link-meta-block', {
    * No information saved to the block
    * Data is saved to post meta via attributes
    */
-  save () {
+  save() {
     return null
   }
 })

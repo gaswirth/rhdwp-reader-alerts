@@ -71,7 +71,7 @@ function rhdwp_reader_alerts_block_assets() { // phpcs:ignore
 			// Enqueue blocks.build.js in the editor only.
 			'editor_script' => 'rhdwp_reader_alerts-block-js',
 			// Enqueue blocks.editor.build.css in the editor only.
-			'editor_style'  => 'rhdwp_reader_alerts-block-editor-css',
+			'editor_style'  => 'rhdwp_reader_alerts-block-editor-css'
 		)
 	);
 
@@ -161,6 +161,18 @@ function rhdwp_reader_alert_init() {
 		'single'		=> true,
 		'type'			=> 'boolean'
 	) );
+
+	register_post_meta( 'reader-alert', 'rhdwp_alert_has_expiration', array(
+		'show_in_rest'	=> true,
+		'single'		=> true,
+		'type'			=> 'boolean'
+	) );
+
+	register_post_meta( 'reader-alert', 'rhdwp_alert_expiration_date', array(
+		'show_in_rest'	=> true,
+		'single'		=> true,
+		'type'			=> 'string'
+	) );
 }
 add_action( 'init', 'rhdwp_reader_alert_init' );
 
@@ -202,7 +214,7 @@ function rhdwp_reader_alert_updated_messages( $messages ) {
 add_filter( 'post_updated_messages', 'rhdwp_reader_alert_updated_messages' );
 
 /**
- * * Changes the post title placeholder text for reader-alert posts.
+ * Changes the post title placeholder text for reader-alert posts.
  *
  * @param [string] $title
  * @return string The new title
@@ -215,3 +227,58 @@ function rhdwp_change_title_placeholder( $title ) {
 	return $title;
 }
 add_filter( 'enter_title_here', 'rhdwp_change_title_placeholder' );
+
+/**
+ * Action hook for the expiration daily cron
+ *
+ * @return void
+ */
+add_action( 'wp', 'rhdwp_expire_reader_alert_daily' );
+add_action( 'rhdwp_expire_reader_alert', 'rhdwp_expire_reader_alert_callback' );
+function rhdwp_expire_reader_alert_daily() {
+	if ( ! wp_next_scheduled( 'rhdwp_expire_reader_alert' ) ) {
+		wp_schedule_event( current_time( 'timestamp' ) , 'ten', 'rhdwp_expire_reader_alert' );
+	}
+}
+
+/**
+ * Callback function for the expiration cron job. Changes post status to 'draft' and adds a notice to the post title (title used in backend only)
+ *
+ * @return void
+ */
+function rhdwp_expire_reader_alert_callback() {
+	$q = new WP_Query( array(
+		'post_type'				=> 'reader-alert',
+		'posts_per_page'	=> -1,
+		'post_status'			=> 'publish'
+	) );
+
+	if ( $q->have_posts() ) {
+		while ( $q->have_posts() ) { $q->the_post();
+			
+			$has_expiration = get_post_meta( get_the_id(), 'rhdwp_alert_has_expiration', true );
+
+			if ( $has_expiration == true ) {
+				$expiration = get_post_meta( get_the_id(), 'rhdwp_alert_expiration_date', true );
+				$expiration_date = strtotime($expiration);
+
+				if ( $expiration_date < current_time( 'timestamp' ) ) {
+					wp_delete_post( get_the_id() );
+				}
+			}
+		}
+		
+		wp_reset_postdata();
+	}
+}
+
+//DEV
+function isa_add_cron_recurrence_interval( $schedules ) {
+	$schedules['ten'] = array(
+					'interval'  => 10,
+					'display'   => __( 'Every 10 seconds', 'rhdwp' )
+	);
+	 
+	return $schedules;
+}
+add_filter( 'cron_schedules', 'isa_add_cron_recurrence_interval' );
