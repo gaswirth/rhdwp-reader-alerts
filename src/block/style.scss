@@ -56,20 +56,37 @@
       border: 1px solid $black;
       border-radius: 50%;
       color: inherit;
-      font-size: 1.1em;
-      font-weight: bold;
-      line-height: 1;
-      padding: 2px 4px;
+      display: block;
       position: absolute;
       right: 16px;
       top: 50%;
       transform: translateY(-50%);
       transition: background 0.1s, color 0.1s;
+      height: 25px;
+      width: 25px;
 
+      .icon {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 12px;
+        width: 12px;
+
+        path {
+          fill: inherit;
+        }
+      }
 
       &:hover {
-        background: $black;
-        color: $gray;
+        background-color: $black;
+        
+        .icon {
+          path {
+            fill: $gray;
+          }
+        }
       }
     }
   }
