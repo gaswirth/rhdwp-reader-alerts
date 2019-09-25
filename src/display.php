@@ -32,6 +32,8 @@ function rhdwp_reader_alerts() {
 			$open_new_tab = get_post_meta( $alert->ID, 'rhdwp_alert_link_url_new_tab', true );
 			
 			$alert_text = apply_filters( 'the_content', $alert->post_content );
+			$alert_text_filtered = preg_replace( '/<p(.*?)>(.*?)<\/p>/i', '<p\1><span class="text">\2</span></p>', $alert_text );
+			
 			$alert_link = esc_url( get_post_meta( $alert->ID, 'rhdwp_alert_link_url', true ) );
 			$alert_target = ( $open_new_tab == true ) ? '_blank' : '_self';
 
@@ -41,7 +43,7 @@ function rhdwp_reader_alerts() {
 			$item = '
 				<li class="reader-alert-item" data-post-id="' . $alert->ID . '">
 					<div class="alert-content">
-					' . $link_open . $alert_text . $link_close . '
+					' . $link_open . $alert_text_filtered . $link_close . '
 					</div>
 					<a class="close-reader-alert" href="#">' . rhdwp_reader_alerts_close_icon() . '</a>
 				</li>

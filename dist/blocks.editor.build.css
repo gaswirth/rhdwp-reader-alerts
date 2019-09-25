@@ -1,1 +1,18 @@
-body.block-editor-page.post-type-reader-alert .editor-writing-flow .editor-post-title__input{font-size:1.34em;font-weight:normal}.wp-block-rhdwp-reader-alerts-link-meta-block{padding:6px}
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+body.block-editor-page.post-type-reader-alert .editor-writing-flow .editor-post-title__input {
+  font-size: 1.34em;
+  font-weight: normal; }
+
+.wp-block-rhdwp-reader-alerts-link-meta-block {
+  padding: 6px; }
