@@ -1,0 +1,24 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+ body {
+  &.block-editor-page {
+    &.post-type-reader-alert {
+      .editor-writing-flow {
+        .editor-post-title {
+          &__input {
+            font-size: 1.34em;
+            font-weight: normal;
+          }
+        }
+      }
+    }
+  }
+}
+
+.wp-block-rhdwp-reader-alerts-link-meta-block {
+  padding: 6px;
+}

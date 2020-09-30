@@ -1,0 +1,14 @@
+{
+	"name": "rhdwp/reader-alerts",
+	"title": "Reader Alerts",
+	"category": "common",
+	"icon": "warning",
+	"description": "Text alerts and notices for your visitors, with optional linking.",
+	"textdomain": "rhdwp-reader-alerts",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css"
+}

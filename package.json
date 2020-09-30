@@ -1,0 +1,33 @@
+{
+	"name": "rhdwp-reader-alerts",
+	"version": "1.0.8",
+	"description": "Text alerts and notices for your visitors, with optional linking.",
+	"author": "Roundhouse Designs",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build",
+		"format:js": "wp-scripts format-js",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"start": "wp-scripts start",
+		"packages-update": "wp-scripts packages-update",
+		"postinstall": "node ./node_modules/frontend-dependencies/index.js"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^12.2.0",
+		"js-cookie": "^2.2.1"
+	},
+	"dependencies": {
+		"frontend-dependencies": "^1.1.8"
+	},
+	"frontendDependencies": {
+		"target": "static/",
+		"packages": {
+			"js-cookie": {
+				"version": "^2.2.1",
+				"src": "src/js.cookie.js"
+			}
+		}
+	}
+}
