@@ -40,13 +40,14 @@ export default function Edit(props) {
 	return (
 		<div className={className}>
 			<div className="reader-options">
-				<h4>Alert Options</h4>
-				<TextControl
-					label={__('Link alert to:', 'rhdwp')}
-					placeholder={'https://google.com'}
-					value={url}
-					onChange={(url) => setAttributes({ url })}
-				/>
+				<h4 className="reader-options__heading">Alert Options</h4>
+				<div className="reader-options__url">
+					<TextControl
+						label={__('Link URL:', 'rhdwp')}
+						value={url}
+						onChange={(url) => setAttributes({ url })}
+					/>
+				</div>
 				<CheckboxControl
 					label={__(
 						'Open this link in a new tab (not recommended for internal site links).',

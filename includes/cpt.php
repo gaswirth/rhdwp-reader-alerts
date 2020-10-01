@@ -44,9 +44,11 @@ function rhdwp_reader_alert_init() {
 		'rest_base'             => 'reader-alert',
 		'rest_controller_class' => 'WP_REST_Posts_Controller',
 		'template'              => array(
-			array( 'core/paragraph', array(
-				'placeholder' => 'Enter your alert message here.',
-			) ),
+			array( 'core/paragraph',
+				array(
+					'placeholder' => 'Enter your alert message here, then customize background and text colors on the right.',
+				),
+			),
 			array( 'rhdwp/reader-alerts', array() ),
 		),
 		'template_lock'         => 'all',
@@ -157,7 +159,7 @@ function rhdwp_expire_reader_alert_callback() {
 	) );
 
 	if ( $q->have_posts() ) {
-		while ( $q->have_posts() ) {$q->the_post();
+		while ( $q->have_posts() ): $q->the_post();
 
 			$has_expiration = get_post_meta( get_the_id(), 'rhdwp_alert__has_expire', true );
 
@@ -169,7 +171,7 @@ function rhdwp_expire_reader_alert_callback() {
 					wp_delete_post( get_the_id() );
 				}
 			}
-		}
+		endwhile;
 
 		wp_reset_postdata();
 	}
