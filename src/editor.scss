@@ -21,21 +21,57 @@ body {
 	}
 }
 
-.wp-block-rhdwp-reader-alerts {
-	.reader-options {
-		background-color: $lightBlue;
-		border: 2px solid $gray;
-		border-radius: 2px;
-		padding: 6px;
+.reader-alert-container {
+	padding: 0 16px;
+	margin-top: 0;
 
-		&__heading {
-			margin: 0;
-			text-decoration: underline;
+	.block-editor-block-list {
+		&__block {
+			&:first-child {
+				margin-bottom: 0;
+			}
 		}
+	}
 
-		&__url {
+	.reader-alerts-message {
+		border: 1px dotted $lightGray;
+		padding: 8px !important;
+		margin-top: 0;
+
+		&.is-selected {
+			border-style: solid;
+		}
+	}
+
+	.wp-block-rhdwp-reader-alerts {
+		.reader-alert-options {
+			border-radius: 2px;
+			padding: 6px;
+
 			input {
-				cursor: text;
+				&[type="text"] {
+					cursor: text;
+				}
+			}
+
+			&__heading {
+				margin: 0 0 6px;
+			}
+
+			&__settings {
+				&__checkboxes {
+					&__expire {
+						p {
+							margin-bottom: 0;
+						}
+					}
+				}
+			}
+
+			&__text {
+				input {
+					cursor: text;
+				}
 			}
 		}
 	}

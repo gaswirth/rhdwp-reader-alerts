@@ -44,12 +44,14 @@ function rhdwp_reader_alert_init() {
 		'rest_base'             => 'reader-alert',
 		'rest_controller_class' => 'WP_REST_Posts_Controller',
 		'template'              => array(
-			array( 'core/paragraph',
+			array( 'core/group',
 				array(
-					'placeholder' => 'Enter your alert message here, then customize background and text colors on the right.',
+					'className' => 'reader-alert-container',
+					'align'     => 'center',
 				),
-			),
-			array( 'rhdwp/reader-alerts', array() ),
+				array(
+					array( 'rhdwp/reader-alerts', array() ),
+			) ),
 		),
 		'template_lock'         => 'all',
 	) );
@@ -59,6 +61,18 @@ function rhdwp_reader_alert_init() {
 		'show_in_rest' => true,
 		'single'       => true,
 		'type'         => 'string',
+	) );
+	
+	register_post_meta( 'reader-alert', 'rhdwp_alert__text', array(
+		'show_in_rest' => true,
+		'single'       => true,
+		'type'         => 'string',
+	) );
+	
+	register_post_meta( 'reader-alert', 'rhdwp_alert__min_height', array(
+		'show_in_rest' => true,
+		'single'       => true,
+		'type'         => 'number',
 	) );
 
 	register_post_meta( 'reader-alert', 'rhdwp_alert__url_new_tab', array(

@@ -69,6 +69,17 @@ registerBlockType('rhdwp/reader-alerts', {
 			source: 'meta',
 			meta: 'rhdwp_alert__url',
 		},
+		text: {
+			type: 'string',
+			source: 'meta',
+			meta: 'rhdwp_alert__text'
+		},
+		minHeight: {
+			type: 'number',
+			source: 'meta',
+			meta: 'rhdwp_alert__min_height',
+			default: 100
+		},
 		openNewTab: {
 			type: 'boolean',
 			source: 'meta',

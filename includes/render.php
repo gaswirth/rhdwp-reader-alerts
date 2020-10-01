@@ -29,12 +29,13 @@ function rhdwp_reader_alerts() {
 		$html .= '<ul class="reader-alerts">';
 
 		foreach ( $alerts as $alert ) {
-			$open_new_tab = get_post_meta( $alert->ID, 'rhdwp_alert__url_new_tab', true );
+			$meta = get_post_meta( $alert->ID );
+			$open_new_tab = $meta['rhdwp_alert__url_new_tab'][0];
 
-			$alert_text          = apply_filters( 'the_content', $alert->post_content );
+			$alert_text          = apply_filters( 'the_content', $meta['rhdwp_alert__text'][0] );
 			$alert_text_filtered = preg_replace( '/<p(.*?)>(.*?)<\/p>/i', '<p\1><span class="text">\2</span></p>', $alert_text );
 
-			$alert_link   = esc_url( get_post_meta( $alert->ID, 'rhdwp_alert__url', true ) );
+			$alert_link   = esc_url( $meta['rhdwp_alert__url'][0] );
 			$alert_target = ( $open_new_tab == true ) ? '_blank' : '_self';
 
 			$link_open  = $alert_link ? '<a class="reader-alert-link" href="' . $alert_link . '" target="' . $alert_target . '">' : '';

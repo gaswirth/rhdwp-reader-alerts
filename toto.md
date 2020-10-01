@@ -4,10 +4,10 @@ Features
 ---
 * Vertical height
 * Close button colors
-* Default background & text colors
-* Customize hover effect intensity
+* Enable/disable hover effect
 * Reset cookie on edit
-
+* Bonafide plugin admin screen
+  * Option: Only show one alert at a time
 ---
 Fixes
 ---
